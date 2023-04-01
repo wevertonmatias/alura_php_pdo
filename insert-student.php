@@ -15,12 +15,21 @@ $pdo = new PDO("sqlite:{$dbPath}");
 //var_dump($pdo->exec($sqlInsert));
 
 
-$student = new Student(null, "Weverton', ''); DROP TABLE students -- Matias", new DateTimeImmutable('1995-06-14'));
+//$student = new Student(null, "Weverton', ''); DROP TABLE students -- Matias", new DateTimeImmutable('1995-06-14'));
 
-$sqlInsert = "INSERT INTO students (name, birth_date) VALUES (?, ?)";
+//$sqlInsert = "INSERT INTO students (name, birth_date) VALUES (?, ?)";
+//$statement = $pdo->prepare($sqlInsert);
+//$statement->bindValue(1, $student->name());
+//$statement->bindValue(2, $student->birthDate()->format('Y-m-d'));
+
+$student = new Student(null, "Pedro Matins", new DateTimeImmutable('1990-06-14'));
+$sqlInsert = "INSERT INTO students (name, birth_date) VALUES (:name, :birth_date)";
 $statement = $pdo->prepare($sqlInsert);
-$statement->bindValue(1, $student->name());
-$statement->bindValue(2, $student->birthDate()->format('Y-m-d'));
+$statement->bindValue(":name", $student->name());
+$statement->bindValue(":birth_date", $student->birthDate()->format('Y-m-d'));
+
 if($statement->execute()){
-   echo 'Aluno inserido com sucesso.';
+    echo 'Aluno inserido com sucesso.';
 };
+
+
