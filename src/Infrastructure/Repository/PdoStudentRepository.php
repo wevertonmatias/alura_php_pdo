@@ -1,6 +1,6 @@
 <?php
 
-namespace Alura\Pdo\Infrastructure\Respository;
+namespace Alura\Pdo\Infrastructure\Repository;
 
 use Alura\Pdo\Domain\Model\Student;
 use Alura\Pdo\Domain\Repository\StudentyRepository;
@@ -65,9 +65,9 @@ class PdoStudentRepository implements StudentyRepository
         $insertQuery = 'INSERT INTO students (name, birth_date) VALUES (:name, :birth_date);';
         $stmt = $this->connection->prepare($insertQuery);
 
-        $success = $stmt->bindValue([
+        $success = $stmt->execute([
             ':name' => $student->name(),
-            'birth_date' => $student->birthDate()
+            ':birth_date' => $student->birthDate()->format('Y-m-d')
         ]);
 
         if($success){
@@ -82,7 +82,7 @@ class PdoStudentRepository implements StudentyRepository
         $stmt = $this->connection->prepare($updateQuery);
         $stmt->bindValue([
             ':name' => $student->name(),
-            ':birth_date' => $student->birthDate()
+            ':birth_date' => $student->birthDate()->format('Y-m-d')
             ]);
         $stmt->bindValue(':id', $student->id(), PDO::PARAM_INT);
 
