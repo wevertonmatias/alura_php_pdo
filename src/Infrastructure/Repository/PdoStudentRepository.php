@@ -66,7 +66,7 @@ class PdoStudentRepository implements StudentyRepository
         $stmt = $this->connection->prepare($insertQuery);
 
         if($stmt === false){
-            throw new \RuntimeException("Erro ao executar a query");
+            throw new \RuntimeException($this->connection->errorInfo()[2]);
         }
 
         $success = $stmt->execute([
