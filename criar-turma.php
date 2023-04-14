@@ -22,7 +22,7 @@ try {
     $anotherStudent = new Student(null, 'Matias W.', new DateTimeImmutable('1999-05-05'));
     $studentRepository->save($anotherStudent);
     $connection->commit();
-}catch (\RuntimeException $e){
+}catch (\PDOException $e){
     $connection->rollBack();
     echo $e->getMessage() . PHP_EOL;
 }
